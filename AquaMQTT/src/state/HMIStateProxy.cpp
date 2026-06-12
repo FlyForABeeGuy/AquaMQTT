@@ -60,7 +60,7 @@ void HMIStateProxy::applyHMIOverrides(uint8_t* buffer, const message::ProtocolVe
                 // Odyssee does not have the option to disable the heat element. Therefore, we enter operation mode
                 // ECO ACTIVE (which forbids usage of heat element) and set the target temperature to maximum temperature
                 // This configuration is not allowed in the HMI controller, but we hope the Main controller accepts it :)
-                 message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_ECO_ACTIVE);
+                message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_ECO_ACTIVE);
             } else {
                 message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_BOOST);
             }
