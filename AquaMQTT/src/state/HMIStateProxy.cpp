@@ -56,13 +56,12 @@ void HMIStateProxy::applyHMIOverrides(uint8_t* buffer, const message::ProtocolVe
         case AM_MODE_PV_HP_ONLY:
             message->setAttr(message::HMI_ATTR_U8::STATE_INSTALLATION_MODE, message::HMIInstallation::INST_HP_ONLY);
             message->setAttr(message::HMI_ATTR_U8::OPERATION_TYPE, message::HMIOperationType::OT_ALWAYS_ON);
-            // if (version == message::PROTOCOL_ODYSSEE) {
+            if (version == message::PROTOCOL_ODYSSEE) {
                 // Odyssee does not have the option to disable the heat element. Therefore, we enter operation mode
                 // ECO ACTIVE (which forbids usage of heat element) and set the target temperature to maximum temperature
                 // This configuration is not allowed in the HMI controller, but we hope the Main controller accepts it :)
-                // message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_ECO_ACTIVE);
-            //} else {
-            // Disabling of previous condition because OM_BOOST is also mentionned as available for the Calypso 
+                 message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_ECO_ACTIVE);
+            } else {
                 message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_BOOST);
             }
                 // ECO modes are designed with algorythms based on previous behaviour, while the Boost command is 
@@ -72,7 +71,8 @@ void HMIStateProxy::applyHMIOverrides(uint8_t* buffer, const message::ProtocolVe
                 // ECO-modes will prevent te unit from enabling the heatpump. Built in checks prevent 
                 // enabling heatpump/heatelement above factory set temperatures if not already enabled 
                 // (ex: Explorer V4 won't start heating if water is above 58°C and heating was off).
-                // Will not override the refusal of the heatelement
+                // Will not override the refusal of the heatelement. Testing needed to see if Calypso
+                // accepts Boost instead of ECO_ACTIVE while still accepting refusal of HE.
             message->setAttr(message::HMI_ATTR_FLOAT::WATER_TARGET_TEMPERATURE, config::MAX_WATER_TEMPERATURE);
             // do not use heat element
             message->setAttr(message::HMI_ATTR_BOOL::EMERGENCY_MODE_ENABLED, false);
