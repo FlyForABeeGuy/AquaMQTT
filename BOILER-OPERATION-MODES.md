@@ -1,7 +1,8 @@
 ## Boiler Operation Modes
 
 Atlantic allows for 4 normal operation modes for their boilers, with each their own use case. 
-The nuances between each mode can be relevant or ignored deping of use case.
+The nuances between each mode can be relevant or ignored depending of use case. There is also an 
+absence mode.
 
 The information here has been found though installers manuals and commercial information.
 Some differences should be expected between generations of models.
