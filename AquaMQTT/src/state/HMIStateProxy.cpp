@@ -65,13 +65,8 @@ void HMIStateProxy::applyHMIOverrides(uint8_t* buffer, const message::ProtocolVe
                 message->setAttr(message::HMI_ATTR_U8::OPERATION_MODE, message::HMIOperationMode::OM_BOOST);
             }
                 // ECO modes are designed with algorythms based on previous behaviour, while the Boost command is 
-                // on demand only, unregarding of previous behaviour. Depending of the needs of the user
-                // (off hours, grid overproduction shedding actions, solar panels,...), and the habits
-                // of the user (ex: more water usage on certain days than others,..), and the water temp
-                // ECO-modes will prevent te unit from enabling the heatpump. Built in checks prevent 
-                // enabling heatpump/heatelement above factory set temperatures if not already enabled 
-                // (ex: Explorer V4 won't start heating if water is above 58°C and heating was off).
-                // Will not override the refusal of the heatelement. Testing needed to see if Calypso
+                // on demand only, unregarding of previous behaviour. Built in checks prevent 
+                // enabling above factory-set temperatures. Will not override the refusal of the heatelement. Testing needed to see if Calypso
                 // accepts Boost instead of ECO_ACTIVE while still accepting refusal of HE.
             message->setAttr(message::HMI_ATTR_FLOAT::WATER_TARGET_TEMPERATURE, config::MAX_WATER_TEMPERATURE);
             // do not use heat element
